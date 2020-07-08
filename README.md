@@ -1,2 +1,2 @@
-# online-judge
+# online-judges
 ⏳🗂 This is a repository to save online judge issues solutions
