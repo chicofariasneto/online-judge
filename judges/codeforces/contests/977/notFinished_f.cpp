@@ -10,6 +10,9 @@ using ll = long long;
 using llu = long long unsigned;
 using ld = long double;
 
+// large numbers
+const ll MAXN = 1e18+1;
+
 // For graphs
 map < ll, vector < ll > > adj;
 map < ll, bool > visited;
@@ -25,46 +28,31 @@ inline int mod (ll x, int m = MOD) {
 	return (int)(((x%m) + m)%m);
 }
 
-void dfs(ll i) {
-    if (visited[i]) return;
-    visited[i] = true;
-    nodes.push_back(adj[i].size());
-
-    for (auto j : adj[i])
-        dfs(j);
-}
-
-ll cycle() {
-	for (auto i : nodes)
-		if (i != 2)
-			return 0;
-	return 1;
-}
-
-ll n, m;
+ll n;
 
 void solve() {
-	scanf("%lld %lld", &n, &m);
-	
-	for (ll i = 0; i < m; i++) {
-		ll x, y;
-		scanf("%lld %lld", &x, &y);
+    scanf("%lld", &n);
 
-		adj[x].push_back(y);
-		adj[y].push_back(x);
-	}
-
-	ll count = 0;
-
-	for (ll i = 1; i <= m; i++) {
-		if (!visited[i]) {
-			dfs(i);
-			count += cycle();
-			nodes.clear();
-		}
-	}
-
-	printf("%d\n", count);
+    for (ll i = 0; i < n; i++)
+        scanf("%lld", &nodes[i]);
+    
+    sort(nodes.begin(), nodes.end());
+    
+    bool aux = false;
+    for (ll i = 0; i < n; i++) {
+        for (ll j = 1; j < n-i; j++) {
+            if (nodes[0] == nodes[j] + j) aux = true;
+            else aux = false;
+        }
+        if (aux) {
+            printf("%lld\n", i+1);
+            for (ll j = 0; j < n-i; j++) {
+                if (j == 0) printf("%lld", nodes[j]);
+                else printf(" %lld", nodes[j]);
+            }
+            putchar('\n');
+        }
+    }
 }
 
 ////////////////////////// Solution starts below. //////////////////////////////
